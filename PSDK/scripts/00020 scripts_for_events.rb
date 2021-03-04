@@ -1,5 +1,6 @@
 class Interpreter
-  RAND_POK_LEVEL= 50
+  RAND_POK_LEVEL = 50
+  NEW_TRAINER_YML_AFTER = 1
 
   $trainer_counter = -1
 
@@ -14,7 +15,7 @@ class Interpreter
   def start_battle_loop(bgm: DEFAULT_TRAINER_BGM, disable: 'A', enable: 'B', troop_id: 3)
     replace_team(RAND_POK_LEVEL, $pokemon_party.size)
     $trainer_counter += 1
-    if $trainer_counter < 0
+    if $trainer_counter < RENEW_TRAINER_YML_AFTER
 
       #set_self_switch(false, disable, @event_id) # Better to disable the switch here than in defeat
       original_battle_bgm = $game_system.battle_bgm
@@ -32,14 +33,14 @@ class Interpreter
       end
 
     else
-      trainer_regen
-      #exit(true)
+      new_trainer_yml
+      #after this the game should close down saving or anything else
     end
   end
 
   # creates new random trainer.rxdata.yml file and restores it to the projects trainers.rxdata file.
-  def trainer_regen
-    puts 'start trainer_regen'
+  def new_trainer_yml
+    puts 'start new_trainer_yml'
     ::PFM::Pokemon.rand_train_array(280, 2, RAND_POK_LEVEL)
     system('cmd.exe /c Game --util=restore')
   end
@@ -55,7 +56,5 @@ class Interpreter
     (1...pokcount).each do |i|  #add random pokemon to party
       $pokemon_party.add_pokemon(PFM::Pokemon.gen_rand_pok(level))
     end
-
-
   end
 end
