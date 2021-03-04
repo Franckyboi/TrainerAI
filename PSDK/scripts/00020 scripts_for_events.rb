@@ -15,7 +15,7 @@ class Interpreter
   def start_battle_loop(bgm: DEFAULT_TRAINER_BGM, disable: 'A', enable: 'B', troop_id: 3)
     replace_team(RAND_POK_LEVEL, $pokemon_party.size)
     $trainer_counter += 1
-    if $trainer_counter < RENEW_TRAINER_YML_AFTER
+    if $trainer_counter < NEW_TRAINER_YML_AFTER
 
       #set_self_switch(false, disable, @event_id) # Better to disable the switch here than in defeat
       original_battle_bgm = $game_system.battle_bgm
